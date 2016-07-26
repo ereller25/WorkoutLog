@@ -1,3 +1,4 @@
+var index;
 $(function() { // same as $(document).ready(function() {
 	$.extend(WorkoutLog, {
 		log: {
@@ -22,7 +23,7 @@ $(function() { // same as $(document).ready(function() {
 				for (var i = 0; i < len; i++) {
 					lis += "<li class='list-group-item'>" +
 					history[i].def + " - " +
-					history[i].result +
+					history[i].result + " " +
 					"<button id='" + history[i].id + "' class='remove'><strong>X</strong></button></li>";
 				}
 				$("#history-list").children().remove();
@@ -54,10 +55,16 @@ $(function() { // same as $(document).ready(function() {
 			},
 
 			delete: function(){
+
+
 				var thisLog = {
 					id: $(this).attr("id")
 				};
-
+				for(var i = 0; i < WorkoutLog.log.workouts.length; i++){
+					if(WorkoutLog.log.workouts[i].id == thisLog.id){
+						index = i;
+					}
+				}
 				var deleteData = { log: thisLog };
 				console.log(deleteData);
 				var deleteLog = $.ajax({
@@ -66,7 +73,7 @@ $(function() { // same as $(document).ready(function() {
 					data: JSON.stringify(deleteData),
 					contentType: "application/json"
 				});
-
+				WorkoutLog.log.workouts.splice(index, 1);
 				// removes list item
 				// references button then grabs closest li
 				$(this).closest("li").remove();

@@ -12,7 +12,7 @@ $(function() {
 					type: "POST",
 					url: WorkoutLog.API_BASE + "definition",
 					data: JSON.stringify(postData),
-					contentType: 'application/json'
+					contentType: "application/json"
 				});
 
 				define.done(function(data) {
