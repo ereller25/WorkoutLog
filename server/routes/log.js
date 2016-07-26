@@ -41,4 +41,21 @@ router.get('/', function(req, res) {
 		);
 });
 
+router.delete('/', function(req, res) {
+	var data = req.body.log.id;
+	// res.json(data);
+	console.log(data);
+	Log
+		.destroy({
+			where: { id: data }
+		}).then(
+			function deleteLogSuccess(data){
+				res.send("You removed a log");
+			},
+			function deleteLogError(err){
+				res.send(500, err.message);
+			}
+		);
+});
+
 module.exports = router;

@@ -20,7 +20,10 @@ $(function() { // same as $(document).ready(function() {
 				var len = history.length;
 				var lis = "";
 				for (var i = 0; i < len; i++) {
-					lis += "<li class='list-group-item'>" + history[i].def + " - " + history[i].result + "</li>";
+					lis += "<li class='list-group-item'>" +
+					history[i].def + " - " +
+					history[i].result +
+					"<button id='" + history[i].id + "' class='remove'><strong>X</strong></button></li>";
 				}
 				$("#history-list").children().remove();
 				$("#history-list").append(lis);
@@ -50,6 +53,30 @@ $(function() { // same as $(document).ready(function() {
 				});
 			},
 
+			delete: function(){
+				var thisLog = {
+					id: $(this).attr("id")
+				};
+
+				var deleteData = { log: thisLog };
+				console.log(deleteData);
+				var deleteLog = $.ajax({
+					type: "DELETE",
+					url: WorkoutLog.API_BASE + "log",
+					data: JSON.stringify(deleteData),
+					contentType: "application/json"
+				});
+
+				// removes list item
+				// references button then grabs closest li
+				$(this).closest("li").remove();
+
+				deleteLog.fail(function(){
+					console.log("nope. you didn't delete it.");
+				});
+			},
+
+
 			fetchAll: function() {
 				var fetchDefs = $.ajax({
 					type: "GET",
@@ -70,6 +97,10 @@ $(function() { // same as $(document).ready(function() {
 	});
 
 	$("#log-save").on("click", WorkoutLog.log.create);
+
+	// need to change to delete once .ajax call is finished
+	// has to target id of ul b/c li items are dynamic
+	$("#history-list").delegate('.remove', 'click', WorkoutLog.log.delete);
 
 	if (window.localStorage.getItem("sessionToken")) {
 		WorkoutLog.log.fetchAll();
