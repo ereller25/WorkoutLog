@@ -75,9 +75,3 @@ $(function() { // same as $(document).ready(function() {
 		WorkoutLog.log.fetchAll();
 	}
 });
-
-
-
-
-
-

@@ -10,10 +10,11 @@ $(function() {
     signup: function() {
       var username = $("#su_username").val();
       var password = $("#su_password").val();
-      var user = { 
-        user: { 
+      console.log("made it");
+      var user = {
+        user: {
           username: username,
-          password: password 
+          password: password
         }
       };
 

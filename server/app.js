@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 var sequelize = require('./db.js');
 
 // creates the table(s) in postgres
-sequelize.sync(); // sequelize.sync({ force: true }); -- will drop the table and recreate it
+sequelize.sync();
+//sequelize.sync({ force: true }); //-- will drop the table and recreate it
 
 app.use(bodyParser.json());
 
